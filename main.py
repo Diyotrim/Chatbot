@@ -1,4 +1,4 @@
-import os  # For accessing os level dir
+import os  # For accessing os level directories
 from langchain_community.document_loaders import PyPDFLoader  # For loading the PDF
 from langchain.prompts import PromptTemplate  # Prompt template
 from langchain_pinecone import PineconeVectorStore  # Vector Database
@@ -20,7 +20,6 @@ Question: {question}
 
 Helpful answer:
 """
-
 
 # Function to interact with the prompt template
 def set_custom_prompt():
@@ -86,3 +85,7 @@ async def main(message: cl.Message):
     res = await chain.acall({'query': message.content})
     answer = res['result']
     await cl.Message(content=answer).send()
+
+if __name__ == "__main__":
+    # Explicitly set the host and port for Render deployment
+    cl.run(host="0.0.0.0", port=int(os.getenv("PORT", 10000)))
